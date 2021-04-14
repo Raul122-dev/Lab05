@@ -8,6 +8,8 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [ search, setSearch] = useState('')
+
 
   const handleChangeName = (event) =>{
     setNewName(event.target.value)
@@ -39,9 +41,15 @@ const App = () => {
 
   }
 
+  const handleChangeFilter = (event) => {
+    setSearch(event.target.value)
+  }
+
+
   return (
     <div>
       <h2>Phonebook</h2>
+        filter shown with: <input onChange={handleChangeFilter} value={search}/>
       <form onSubmit={handleSubmit}>
         <div>
           name: <input onChange={handleChangeName} value={newName}/>
@@ -52,7 +60,9 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map((persona) => <Person key={persona.name} person={persona}/>)}
+      {persons
+      .filter(persona => persona.name.includes(search))
+      .map((persona) => <Person key={persona.name} person={persona}/>)}
     </div>
   )
 }
