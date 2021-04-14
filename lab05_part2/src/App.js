@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import Filter from './components/Filter'
 import Person from './components/Person'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
+
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas',
       number: '040-1234567'}
@@ -10,7 +13,7 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ search, setSearch] = useState('')
 
-
+  
   const handleChangeName = (event) =>{
     setNewName(event.target.value)
   }
@@ -45,26 +48,24 @@ const App = () => {
     setSearch(event.target.value)
   }
 
-
   return (
     <div>
       <h2>Phonebook</h2>
-        filter shown with: <input onChange={handleChangeFilter} value={search}/>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input onChange={handleChangeName} value={newName}/>
-          number: <input onChange={handleChangeNumber} value={newNumber}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
+
+      <Filter handleChangeFilter={handleChangeFilter} search={search}/>
+
+      <h3>Add a new</h3>
+
+      <PersonForm handleSubmit={handleSubmit} handleChangeName={handleChangeName} handleChangeNumber={handleChangeNumber} newName={newName} newNumber={newNumber}/>
+
+      <h3>Numbers</h3>
+
       {persons
-      .filter(persona => persona.name.includes(search))
-      .map((persona) => <Person key={persona.name} person={persona}/>)}
+        .filter(persona => persona.name.includes(search))
+        .map((persona) => <Person key={persona.name} person={persona}/>)}
     </div>
   )
+  
 }
 
 export default App
