@@ -7,8 +7,11 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
 
+  
+
   const handleChange = (event) =>{
     setNewName(event.target.value)
+    //const name = event.target.value 
   }
 
   const handleSubmit = (event) => {
@@ -17,9 +20,17 @@ const App = () => {
     const personaAddState = {
       name: newName,
     };
+    
+    for (let i = 0; i < persons.length; i++) {
+      if (newName === persons[i].name) {
+        alert(`${newName} is already added to phonebook`)
+        personaAddState.name = ""    
+      }
+    }
 
     setPersons([...persons, personaAddState])
     setNewName("")
+
   }
 
   return (
